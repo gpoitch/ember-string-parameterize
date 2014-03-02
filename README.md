@@ -32,10 +32,10 @@ Include `ember-string.parameterize.js` after `ember.js` in your app.
 
 bower:
 ```bash
-bower install ember-string-parameterize`
+bower install ember-string-parameterize
 ```
 
 npm:
 ```bash
-npm install ember-string-parameterize`
+npm install ember-string-parameterize
 ```
