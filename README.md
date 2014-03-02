@@ -5,6 +5,20 @@ Similar to ActiveSupport's [parameterize](http://api.rubyonrails.org/classes/Act
 
 This is useful for creating slugs for your Ember.js routes.  So useful that this feature was [merged](https://github.com/emberjs/ember.js/pull/3953) into Ember core with a feature flag, but later [removed](https://github.com/emberjs/ember.js/pull/4452) due to [potential API bloat](http://emberjs.com/blog/2014/01/19/core-team-meeting-minutes-2014-01-17.html). Voice your opinion if you want it back, or, just use this!
 
+## Usage
+
+Include `ember-string.parameterize.js` after `ember.js` in your app.
+
+bower:
+```bash
+bower install ember-string-parameterize
+```
+
+npm:
+```bash
+npm install ember-string-parameterize
+```
+
 ## Examples
 ```javascript
 Ember.String.parameterize('My favorite movies.');
@@ -24,18 +38,4 @@ Also works with String prototype syntax, when `Ember.EXTEND_PROTOTYPES.String` i
 ```javascript
 'I work this way too!'.parameterize();
 //=> 'i-work-this-way-too'
-```
-
-## Use it
-
-Include `ember-string.parameterize.js` after `ember.js` in your app.
-
-bower:
-```bash
-bower install ember-string-parameterize
-```
-
-npm:
-```bash
-npm install ember-string-parameterize
 ```
