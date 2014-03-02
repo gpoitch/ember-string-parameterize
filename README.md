@@ -1,4 +1,4 @@
-# Ember.String.paramterize [![Build Status](https://travis-ci.org/gdub22/ember-string-parameterize.png?branch=master)](https://travis-ci.org/gdub22/ember-string-parameterize)
+# Ember.String.parameterize [![Build Status](https://travis-ci.org/gdub22/ember-string-parameterize.png?branch=master)](https://travis-ci.org/gdub22/ember-string-parameterize)
 
 An [ember.js](http://emberjs.com) extension that transforms a string so that it may be used as part of a 'pretty' / SEO friendly URL.
 Similar to ActiveSupport's [parameterize](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) inflector.
@@ -30,10 +30,12 @@ Also works with String prototype syntax, when `Ember.EXTEND_PROTOTYPES.String` i
 
 Include `ember-string.parameterize.js` after `ember.js` in your app.
 
-or  
+bower:
+```bash
+bower install ember-string-parameterize`
+```
 
-`bower install ember-string-parameterize`
-
-or  
-
-`npm install ember-string-parameterize`
+npm:
+```bash
+npm install ember-string-parameterize`
+```

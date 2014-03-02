@@ -18,23 +18,12 @@ gulp.task('test', function() {
              .pipe(qunit());
 });
 
+gulp.task('ci', ['lint', 'test']);
+gulp.task('default', ['lint', 'test']);
+
+// Owner only
 gulp.task('bump', function () {
   return gulp.src(['./package.json', './bower.json'])
              .pipe(bump())
              .pipe(gulp.dest('./'));
 });
-
-gulp.task('tag', function () {
-  var pkg = require('./package.json');
-  var v = 'v' + pkg.version;
-  var message = 'Release ' + v;
-
-  return gulp.src('./')
-             .pipe(git.commit(message))
-             .pipe(git.tag(v, message))
-             .pipe(git.push('origin', 'master', '--tags'))
-             .pipe(gulp.dest('./'));
-});
-
-gulp.task('ci', ['lint', 'test']);
-gulp.task('default', ['lint', 'test']);
