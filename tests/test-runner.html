@@ -3,12 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>QUnit</title>
-  <link rel="stylesheet" href="qunit-1.14.0.css">
+  <link rel="stylesheet" href="lib/qunit-1.14.0.css">
 </head>
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
-  <script src="qunit-1.14.0.js"></script>
+  
+  <script src="lib/qunit-1.14.0.js"></script>
+  <script>
+    if (window.location.search.indexOf('?ember') !== -1) {
+      document.write('<scr'+'ipt src="lib/ember-runtime.js"></scr'+'ipt>');
+    }
+  </script>
   <script src="../ember-string-parameterize.js"></script>
   <script src="tests.js"></script>
 </body>

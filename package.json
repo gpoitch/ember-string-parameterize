@@ -1,6 +1,6 @@
 {
   "name": "ember-string-parameterize",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An ember.js extension that transforms a string so that it may be used as part of a 'pretty' / SEO friendly URL.",
   "author": "Garth Poitras <garth22@gmail.com> (http://garthpoitras.com/)",
   "license": "MIT",

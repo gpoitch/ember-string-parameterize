@@ -1,54 +1,67 @@
 (function(global, Ember) {
+  'use strict';
   /**
     Transforms a string so that it may be used as part of a 'pretty' / SEO friendly URL.
     Similar to ActiveSupport's parameterize inflector.
-    This is useful for creating slugs for your routes.
-    Also works with String prototype syntax, when `Ember.EXTEND_PROTOTYPES.String` is enabled.
 
-    @namespace Ember
     @class String
     @method parameterize
-    @param {String} str The string to parameterize.
+    @param  {String} string The string to parameterize.
+    @param  {String} [wordLimit] Optionaly limit number of words outputted.
     @return {String} the parameterized string.
     @example
       ```
-      Ember.String.parameterize('My favorite movies.');
-      //=> 'my-favorite-movies'
-      Ember.String.parameterize('some_underscored_string');
-      //=> 'some-underscored-string'
-      Ember.String.parameterize('100 ways Ember.js is better than Angular.');
-      //=> '100-ways-emberjs-is-better-than-angular'
-      Ember.String.parameterize('#emberjs Core Team Meeting Minutes - 2014/12/06');
-      //=> 'emberjs-core-team-meeting-minutes-2014-12-06'
-      'I work this way too!'.parameterize();
-      //=> 'i-work-this-way-too'
+    '100 ways Ember.js is better than Angular'.parameterize();
+    //=> '100-ways-emberjs-is-better-than-angular'
+    '#emberjs Core Team Meeting Minutes - 2014/12/06'.parameterize();
+    //=> 'emberjs-core-team-meeting-minutes-2014-12-06'
       ```
   */
 
-  // Allow usage without needing Ember.js framework
-  if ('undefined' === typeof Ember) {
-    Ember = global.Ember = { String: {} };
-  }
-  
-  var STRING_PARAMETERIZE_REGEXP_1 = (/[_|\/|\s]+/g),
-      STRING_PARAMETERIZE_REGEXP_2 = (/[^a-z0-9\-]+/gi),
-      STRING_PARAMETERIZE_REGEXP_3 = (/[\-]+/g),
-      STRING_PARAMETERIZE_REGEXP_4 = (/^-+|-+$/g);
+  var SPECIAL_CHAR_REGEXP      = (/[_|\/|\s]+/g),
+      NON_ALPHA_NUMERIC_REGEXP = (/[^a-z0-9\-]+/gi),
+      MULTI_SEPARATOR_REGEXP   = (/[\-]+/g),
+      TRIM_SEPARATOR_REGEXP    = (/^-+|-+$/g),
+      MULTI_WHITESPACE_REGEXP  = (/\s+/g),
+      SEPARATOR = '-', SPACE = ' ', EMPTY = '',
+      TYPE_UNDEFINED = 'undefined';
       
-  var parameterize = Ember.String.parameterize = function(str) {
-    return str.replace(STRING_PARAMETERIZE_REGEXP_1, '-') // replace underscores, slashes and spaces with separator
-              .replace(STRING_PARAMETERIZE_REGEXP_2, '')  // remove non-alphanumeric characters except the separator
-              .replace(STRING_PARAMETERIZE_REGEXP_3, '-') // replace multiple occurring separators
-              .replace(STRING_PARAMETERIZE_REGEXP_4, '')  // trim leading and trailing separators 
-              .toLowerCase();
+  var parameterize = function(string, wordLimit) {
+    if(wordLimit && typeof wordLimit === 'number') {
+      string = string.trim()
+                     .replace(MULTI_WHITESPACE_REGEXP, SPACE)
+                     .split(SPACE)
+                     .slice(0, wordLimit)
+                     .join(SPACE);
+    }
+
+    return string.replace(SPECIAL_CHAR_REGEXP, SEPARATOR)    // replace underscores, slashes and spaces with separator
+                 .replace(NON_ALPHA_NUMERIC_REGEXP, EMPTY)   // remove non-alphanumeric characters except the separator
+                 .replace(MULTI_SEPARATOR_REGEXP, SEPARATOR) // replace multiple occurring separators
+                 .replace(TRIM_SEPARATOR_REGEXP, EMPTY)      // trim leading and trailing separators 
+                 .toLowerCase();                             // convert to lowercase
   };
 
-  // Apply to String.prototype if extending proptypes is enabled in Ember.js app
-  var EXTEND_PROTOTYPES = Ember.EXTEND_PROTOTYPES;
-  if (EXTEND_PROTOTYPES === true || (EXTEND_PROTOTYPES && EXTEND_PROTOTYPES.String)) {
-    String.prototype.parameterize = function() {
-      return parameterize(this);
-    };
+  // Add to Ember.js String, if present
+  if (typeof Ember !== TYPE_UNDEFINED) { 
+    Ember.String.parameterize = parameterize;
+
+    // Extend String.prototype if enabled in Ember.js app
+    var extendProto = Ember.EXTEND_PROTOTYPES;
+    if (extendProto === true || extendProto.String) {
+      String.prototype.parameterize = function(wordLimit) {
+        return parameterize(this, wordLimit);
+      };
+    }
   }
 
+  // Export for node.js and browser
+  if (typeof exports !== TYPE_UNDEFINED) {
+    if (typeof module !== TYPE_UNDEFINED && module.exports) {
+      exports = module.exports = parameterize;
+    }
+    exports.parameterize = parameterize;
+  } else {
+    global.parameterize = parameterize;
+  }
 }(this, this.Ember));
