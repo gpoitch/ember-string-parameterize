@@ -10,7 +10,7 @@ var extendProto = (function() {
 }());
 
 var runParameterizeTest = function(input, expected) {
-  deepEqual(parameterize(input), expected);
+  deepEqual(StringParameterize(input), expected);
   if(isEmberPresent) {
     deepEqual(Ember.String.parameterize(input), expected);
     if(extendProto) {
@@ -20,7 +20,7 @@ var runParameterizeTest = function(input, expected) {
 };
 
 var runParameterizeTestWithLimit = function(input, limit, expected) {
-  deepEqual(parameterize(input, limit), expected);
+  deepEqual(StringParameterize(input, limit), expected);
   if(isEmberPresent) {
     deepEqual(Ember.String.parameterize(input, limit), expected);
     if(extendProto) {

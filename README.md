@@ -53,11 +53,11 @@ Ember.String.parameterize('Using without extending prototypes!', 3);
 ```
 
 ### Vanilla JS
-It will also expose `parameterize` to the browser's window object or node.js
+It will also expose `StringParameterize` to the browser's window object or node.js
 ```javascript
-parameterize('I work without Ember.js');
+StringParameterize('I work without Ember.js');
 //=> 'i-work-without-emberjs'
 
-parameterize('I work without Ember.js', 2);
+StringParameterize('I work without Ember.js', 2);
 //=> 'i-work'
 ```

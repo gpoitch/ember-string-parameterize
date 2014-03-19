@@ -22,13 +22,14 @@
       NON_ALPHA_NUMERIC_REGEXP = (/[^a-z0-9\-]+/gi),
       MULTI_SEPARATOR_REGEXP   = (/[\-]+/g),
       TRIM_SEPARATOR_REGEXP    = (/^-+|-+$/g),
+      TRIM_WHITESPACE_REGEXP   = (/^(\s|\u00A0)+|(\s|\u00A0)+$/g),
       MULTI_WHITESPACE_REGEXP  = (/\s+/g),
       SEPARATOR = '-', SPACE = ' ', EMPTY = '',
       TYPE_UNDEFINED = 'undefined';
       
   var parameterize = function(string, wordLimit) {
     if(wordLimit && typeof wordLimit === 'number') {
-      string = string.trim()
+      string = string.replace(TRIM_WHITESPACE_REGEXP, EMPTY)
                      .replace(MULTI_WHITESPACE_REGEXP, SPACE)
                      .split(SPACE)
                      .slice(0, wordLimit)
@@ -60,8 +61,8 @@
     if (typeof module !== TYPE_UNDEFINED && module.exports) {
       exports = module.exports = parameterize;
     }
-    exports.parameterize = parameterize;
+    exports.StringParameterize = parameterize;
   } else {
-    global.parameterize = parameterize;
+    global.StringParameterize = parameterize;
   }
 }(this, this.Ember));
